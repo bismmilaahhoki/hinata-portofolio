@@ -175,10 +175,8 @@ footer {
 }
 /* ANIMASI SCROLL */
 .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transform: translateY(60px);
-    transition: 0.8s ease;
+    opacity: 1;
+    transform: none;
 }
 
 .reveal.active {
