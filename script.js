@@ -1,14 +1,9 @@
 // ==========================
-// SAFE ELEMENT HELPER
+// TOGGLE DARK MODE + SOUND
 // ==========================
-const $ = (selector) => document.querySelector(selector);
-
-// ==========================
-// DARK MODE + SOUND
-// ==========================
-const btn = $("#toggle");
-const soft = $("#softSound");
-const dark = $("#darkSound");
+const btn = document.getElementById("toggle");
+const soft = document.getElementById("softSound");
+const dark = document.getElementById("darkSound");
 
 let darkMode = false;
 
@@ -23,9 +18,9 @@ if (btn) {
 }
 
 // ==========================
-// CURSOR EFFECT (DESKTOP ONLY)
+// CURSOR EFFECT
 // ==========================
-const cursor = $(".cursor");
+const cursor = document.querySelector(".cursor");
 
 if (cursor && window.innerWidth > 768) {
   document.addEventListener("mousemove", (e) => {
@@ -35,33 +30,39 @@ if (cursor && window.innerWidth > 768) {
 }
 
 // ==========================
-// MENU TOGGLE (MOBILE)
+// MENU TOGGLE (RESPONSIVE)
 // ==========================
 function toggleMenu() {
-  const nav = $(".nav-links");
+  const nav = document.querySelector(".nav-links");
   if (nav) nav.classList.toggle("active");
 }
 
 // ==========================
-// SCROLL REVEAL ANIMATION
+// SCROLL ANIMATION (FIX UTAMA)
 // ==========================
-const reveals = document.querySelectorAll(".reveal");
-
 function revealOnScroll() {
+  const reveals = document.querySelectorAll(".reveal");
+
   reveals.forEach((el) => {
     const top = el.getBoundingClientRect().top;
 
-    if (top < window.innerHeight - 100) {
+    if (top < window.innerHeight - 50) {
       el.classList.add("active");
     }
   });
 }
 
+// 🔥 INI KUNCI FIX HP
+window.addEventListener("load", revealOnScroll);
+
+// scroll trigger
 window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll); // biar langsung muncul di HP
+
+// tambahan biar responsive
+window.addEventListener("resize", revealOnScroll);
 
 // ==========================
-// NAVBAR ACTIVE LINK
+// NAVBAR ACTIVE SCROLL
 // ==========================
 const sections = document.querySelectorAll("section, header");
 const navLinks = document.querySelectorAll(".nav-item");
@@ -87,20 +88,15 @@ window.addEventListener("scroll", () => {
 });
 
 // ==========================
-// PARTICLE BACKGROUND
+// PARTICLE CHAKRA
 // ==========================
 const canvas = document.getElementById("particles");
 
 if (canvas) {
   const ctx = canvas.getContext("2d");
 
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
   let particles = [];
 
@@ -140,7 +136,7 @@ if (canvas) {
 // LOADING SCREEN
 // ==========================
 window.addEventListener("load", () => {
-  const loader = $("#loader");
+  const loader = document.getElementById("loader");
 
   if (loader) {
     setTimeout(() => {
@@ -158,7 +154,7 @@ window.addEventListener("load", () => {
 // PARALLAX EFFECT
 // ==========================
 window.addEventListener("scroll", () => {
-  const hero = $(".parallax");
+  const hero = document.querySelector(".parallax");
 
   if (hero) {
     hero.style.backgroundPositionY = window.scrollY * 0.4 + "px";
