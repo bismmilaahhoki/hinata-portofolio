@@ -1,46 +1,68 @@
-// TOGGLE DARK MODE + SOUND
-const btn = document.getElementById("toggle");
-const soft = document.getElementById("softSound");
-const dark = document.getElementById("darkSound");
+// ==========================
+// SAFE ELEMENT HELPER
+// ==========================
+const $ = (selector) => document.querySelector(selector);
+
+// ==========================
+// DARK MODE + SOUND
+// ==========================
+const btn = $("#toggle");
+const soft = $("#softSound");
+const dark = $("#darkSound");
 
 let darkMode = false;
 
-btn.onclick = () => {
-  darkMode = !darkMode;
-  document.body.classList.toggle("dark-mode");
+if (btn) {
+  btn.onclick = () => {
+    darkMode = !darkMode;
+    document.body.classList.toggle("dark-mode");
 
-  if (darkMode) {
-    dark.play();
-  } else {
-    soft.play();
-  }
-};
-
-// CURSOR EFFECT
-const cursor = document.querySelector(".cursor");
-
-document.addEventListener("mousemove", (e) => {
-  cursor.style.left = e.clientX + "px";
-  cursor.style.top = e.clientY + "px";
-});
-
-// MENU TOGGLE (RESPONSIVE)
-function toggleMenu() {
-  const nav = document.querySelector(".nav-links");
-  nav.classList.toggle("active");
+    if (darkMode && dark) dark.play();
+    if (!darkMode && soft) soft.play();
+  };
 }
-// SCROLL ANIMATION
+
+// ==========================
+// CURSOR EFFECT (DESKTOP ONLY)
+// ==========================
+const cursor = $(".cursor");
+
+if (cursor && window.innerWidth > 768) {
+  document.addEventListener("mousemove", (e) => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+  });
+}
+
+// ==========================
+// MENU TOGGLE (MOBILE)
+// ==========================
+function toggleMenu() {
+  const nav = $(".nav-links");
+  if (nav) nav.classList.toggle("active");
+}
+
+// ==========================
+// SCROLL REVEAL ANIMATION
+// ==========================
 const reveals = document.querySelectorAll(".reveal");
 
-window.addEventListener("scroll", () => {
+function revealOnScroll() {
   reveals.forEach((el) => {
     const top = el.getBoundingClientRect().top;
+
     if (top < window.innerHeight - 100) {
       el.classList.add("active");
     }
   });
-});
-// NAVBAR ACTIVE SCROLL
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll); // biar langsung muncul di HP
+
+// ==========================
+// NAVBAR ACTIVE LINK
+// ==========================
 const sections = document.querySelectorAll("section, header");
 const navLinks = document.querySelectorAll(".nav-item");
 
@@ -48,7 +70,7 @@ window.addEventListener("scroll", () => {
   let current = "";
 
   sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 100;
+    const sectionTop = section.offsetTop - 120;
 
     if (window.scrollY >= sectionTop) {
       current = section.getAttribute("id");
@@ -63,62 +85,82 @@ window.addEventListener("scroll", () => {
     }
   });
 });
-// PARTICLE CHAKRA
+
+// ==========================
+// PARTICLE BACKGROUND
+// ==========================
 const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+if (canvas) {
+  const ctx = canvas.getContext("2d");
 
-let particles = [];
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
 
-for (let i = 0; i < 80; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 3,
-    dx: (Math.random() - 0.5) * 1,
-    dy: (Math.random() - 0.5) * 1,
-  });
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  let particles = [];
+
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2.5,
+      dx: (Math.random() - 0.5) * 0.7,
+      dy: (Math.random() - 0.5) * 0.7,
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(167,139,250,0.4)";
+      ctx.fill();
+
+      p.x += p.dx;
+      p.y += p.dy;
+
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+
+    requestAnimationFrame(drawParticles);
+  }
+
+  drawParticles();
 }
 
-function drawParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach((p) => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(167,139,250,0.4)";
-    ctx.fill();
-
-    p.x += p.dx;
-    p.y += p.dy;
-
-    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-  });
-
-  requestAnimationFrame(drawParticles);
-}
-
-drawParticles();
+// ==========================
 // LOADING SCREEN
+// ==========================
 window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
+  const loader = $("#loader");
 
-  setTimeout(() => {
-    loader.style.opacity = "0";
-    loader.style.transition = "0.5s";
-
+  if (loader) {
     setTimeout(() => {
-      loader.style.display = "none";
-    }, 500);
-  }, 1000);
-});
-// PARALLAX EFFECT
-window.addEventListener("scroll", () => {
-  const scroll = window.scrollY;
-  const hero = document.querySelector(".parallax");
+      loader.style.opacity = "0";
+      loader.style.transition = "0.5s";
 
-  hero.style.backgroundPositionY = scroll * 0.5 + "px";
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 500);
+    }, 800);
+  }
+});
+
+// ==========================
+// PARALLAX EFFECT
+// ==========================
+window.addEventListener("scroll", () => {
+  const hero = $(".parallax");
+
+  if (hero) {
+    hero.style.backgroundPositionY = window.scrollY * 0.4 + "px";
+  }
 });
