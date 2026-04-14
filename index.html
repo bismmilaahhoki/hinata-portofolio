@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hinata Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div id="loader">
+    <div class="spinner"></div>
+    <p>Loading Chakra...</p>
+</div>
+<canvas id="particles"></canvas>
+<!-- Cursor -->
+<div class="cursor"></div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">HinataWeb</div>
+
+    <ul class="nav-links">
+        <li><a href="#home" class="nav-item">Home</a></li>
+        <li><a href="#about" class="nav-item">About</a></li>
+        <li><a href="#tujuan" class="nav-item">Tujuan</a></li>
+        <li><a href="#fitur" class="nav-item">Fitur</a></li>
+        <li><a href="#teknologi" class="nav-item">Teknologi</a></li>
+    </ul> 
+
+    <button id="toggle">Mode</button>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+</nav>
+
+<!-- Audio -->
+<audio id="softSound" src="soft.mp3"></audio>
+<audio id="darkSound" src="dark.mp3"></audio>
+
+<!-- HERO -->
+<header id="home" class="hero">
+    <h1>Hinata Dual Mode Website 🌸</h1>
+    <p>Perancangan Website Interaktif Berbasis Dualitas Karakter</p>
+</header>
+<section id="gallery" class="section reveal">
+    <h2>
+    <a href="gallery.html" class="gallery-title">Gallery</a>
+</h2>
+</section>
+
+<!-- MAIN -->
+<main class="container">
+
+    <!-- ABOUT -->
+    <section id="about" class="section reveal">
+        <h2>About</h2>
+        <p>
+            Website ini dibuat sebagai implementasi desain UI interaktif yang terinspirasi dari konsep dualitas karakter,
+            yaitu sisi lembut dan sisi kuat.
+        </p>
+    </section>
+
+    <!-- TUJUAN -->
+    <section id="tujuan" class="section reveal">
+        <h2>Tujuan</h2>
+        <ul>
+            <li>Mengembangkan website interaktif berbasis animasi</li>
+            <li>Menerapkan konsep dual mode dalam UI</li>
+            <li>Meningkatkan pengalaman pengguna</li>
+        </ul>
+    </section>
+
+    <!-- FITUR -->
+    <section id="fitur" class="section reveal">
+        <h2>Fitur Sistem</h2>
+        <div class="cards">
+            <div class="card">Toggle Mode</div>
+            <div class="card">Sound Effect</div>
+            <div class="card">Custom Cursor</div>
+            <div class="card">Animasi UI</div>
+        </div>
+    </section>
+
+    <!-- TEKNOLOGI -->
+    <section id="teknologi" class="section reveal">
+        <h2>Teknologi</h2>
+        <p>HTML • CSS • JavaScript</p>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Hinata Portfolio</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
